@@ -8,3 +8,4 @@ function getDataToArray(data = []) {
 }
 console.log(getDataToArray(response.data));
 console.log(response.data.length)
+
