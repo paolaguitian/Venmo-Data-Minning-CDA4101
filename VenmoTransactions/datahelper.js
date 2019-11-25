@@ -6,5 +6,5 @@ function getDataToArray(data = []) {
     return acc;
   },[])
 }
-console.olog
 console.log(getDataToArray(response.data));
+console.log(response.data.length)
