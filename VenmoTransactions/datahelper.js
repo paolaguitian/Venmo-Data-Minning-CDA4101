@@ -6,6 +6,7 @@ function getDataToArray(data = []) {
     return acc;
   },[])
 }
-console.log(getDataToArray(response.data));
-console.log(response.data.length)
+const finalForm = getDataToArray(response.data);
+console.log(finalForm);
+console.log(finalForm.length)
 
