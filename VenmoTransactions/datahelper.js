@@ -1,12 +1,22 @@
 import response from './venmoResponse';
 
-function getDataToArray(data = []) {
+function getUsername(data = []) {
   return data.reduce((acc, payment) => {
-    acc.push(payment.username, payment.message);
+    acc.push(payment.username);
     return acc;
   },[])
 }
-const finalForm = getDataToArray(response.data);
-console.log(finalForm);
-console.log(finalForm.length)
+
+function getTransactions(data = []) {
+  return data.reduce((acc,payment) => {
+    acc.push(payment.message);
+    return acc;
+  },[])
+}
+
+
+const username = getUsername(response.data);
+const transactions = getTransactions(response.data);
+console.log(username);
+console.log(transactions)
 
