@@ -42,7 +42,7 @@ for (int i = 0; i < THREADS_PER_BLOCK; i ++)
 / / (1) Allocate and initialize CPU memory
     int∗ A = (int∗) malloc (N∗sizeof(int));
     for ( int i = 0; i < N; i ++)
-        A[i] =//assign values into here
+        A[i]=// assign values into here
 
 / / (2) Allocate GPU memory
     int∗ gpu_A ;

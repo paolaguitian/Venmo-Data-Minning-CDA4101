@@ -1,4 +1,4 @@
-  "🍏","🍎","🍐","🍊","🍋","🍌",
+ const char searchKeywords [][]=  {"🍏","🍎","🍐","🍊","🍋","🍌",
   "🍉","🍇","🍓","🍈","🥭","🍍",
   "🥥","🥝🍅","🥑","🥦","🥬","🥒",
   "🌶","🌽","🥕","🥔","🍠","🥐","🥯",
@@ -15,4 +15,4 @@
   "mickyds", "pizza", "tacos", "groceries", "cheesecake factory", "kfc",
   "breakfast", "brunch", "lunch", "dinner", "wine", "beers","pork","bread", "ubereats",
   "postmates", "grubhub", "booze", "starbucks", "panera", "chipotle", "sushi", "burrito",
-  "coffee"
+  "coffee"};
