@@ -44,7 +44,7 @@ int main(){
 
     // (3) Run GPU code
      filterByFood<<<N,THREADS_PER_BLOCK>>>(GPU_boolResults);
-     cudaMemCpy(boolResults, GPU_boolResults, N*sizeof(bool), cudaMemcpyDeviceToHost);
+     cudaMemcpy(boolResults, GPU_boolResults, N*sizeof(bool), cudaMemcpyDeviceToHost);
 
      for(int i = 0; i < N; i++){
          if(boolResults[i]){
