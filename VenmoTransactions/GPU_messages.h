@@ -1,4 +1,4 @@
- const char messages [][]= { "Ubbbbskis",
+__constant__ GPU_messages= { "Ubbbbskis",
  "Home gooodies",
   "Breaky",
   "New year, new rent agreement",
