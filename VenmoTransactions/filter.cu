@@ -4,7 +4,7 @@
 #include "CPU_messages.h"
 #include "GPU_messages.h"
 #include "usernames.h"
-#include "searchKeywords.h"
+#include "GPU_searchKeywords.h"
 
 #define N 25000 //num of transaction
 #define THREADS_PER_BLOCK 85 //num of search words
