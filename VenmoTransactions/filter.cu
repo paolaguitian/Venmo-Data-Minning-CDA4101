@@ -14,28 +14,36 @@
 #define NUM_CORES 4992
 
 __global__ void GPU_filterByFood(bool* GPU_boolResults) {
-    const char *CM = GPU_messages[blockIdx.x]; //begin str
-    const char *criteria = GPU_searchKeywords[threadIdx.x]; // pattern substr
-    int s= 0;
-    int i = 0;
-    int j = 0;
+    int numloop = N / NUM_CORES;
+    if(numloop == 0) numloop = 1; 
 
-    while(CM[s] != '\0') {
-        i = 0, j = s;
+    for(int m = 0; m < numloop; m++) {
+        int messageIndex = blockIdx.x + (NUM_CORES * m);
+        int criteriaIndex = threadIdx.x;
+        const char *CM = GPU_messages[messageIndex]; //begin str
+        const char *criteria = GPU_searchKeywords[criteriaIndex]; // pattern substr
+        int s= 0;
+        int i = 0;
+        int j = 0;
 
-        while(criteria[i] != '\0' && CM[j] != '\0') {
-            if(CM[j] == criteria[i]) { 
-                j++;
-                i++;
+        
+        while(CM[s] != '\0') {
+            i = 0, j = s;
+
+            while(criteria[i] != '\0' && CM[j] != '\0') {
+                if(CM[j] == criteria[i]) { 
+                    j++;
+                    i++;
+                }
+
+                else break;
+            }
+            if(criteria[i] == '\0'){ //match! :)
+                GPU_boolResults[messageIndex] = true;
             }
 
-            else break;
+            s++;
         }
-        if(criteria[i] == '\0'){ //match! :)
-            GPU_boolResults[blockIdx.x] = true;
-        }
-
-        s++;
     }
 }
 
@@ -126,6 +134,8 @@ int main() {
      free(boolResults);
      free(CPU_boolResults);
 
+     printf("Number of transactions: %d\n", N);
+     printf("-------------------------\n");
      printf("Time taken by CPU: %lf ms\n", CPU_time);
      printf("Time taken by GPU: %lf ms\n", GPU_time);
      return 0;
