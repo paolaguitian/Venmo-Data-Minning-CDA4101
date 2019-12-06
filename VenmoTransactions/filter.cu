@@ -36,7 +36,7 @@ __global__ void filterByFood(bool* GPU_boolResults) {
     }
 }
 
-int main(){
+int main() {
     FILE *fp;
     fp = fopen("Output.txt", "w");
 
