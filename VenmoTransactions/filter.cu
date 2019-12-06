@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdbool.h>
-#include <time.h>
+#include <sys/time.h>
 
 #include "CPU_messages.h"
 #include "GPU_messages.h"
@@ -74,32 +74,34 @@ void CPU_filterByFood(bool* CPU_boolResults) {
 int main() {
     FILE *fp;
     fp = fopen("GPU_results.txt", "w");
-    clock_t start, end;
+    struct timeval start, end;
         
     //(1) Allocate CPU memory
     bool* boolResults = (bool*) malloc(N*sizeof(bool));
     bool* CPU_boolResults = (bool*) malloc(N*sizeof(bool));
 
     //run  CPU code
-    start = clock();
+    gettimeofday( &start, 0);
     
     CPU_filterByFood(CPU_boolResults);        
 
-    end = clock();
-    double CPU_time = double(end - start) / double(CLOCKS_PER_SEC);
+    gettimeofday( &end, 0 );
+    double CPU_time = ( end.tv_sec - start.tv_sec ) * 1000.0 + ( end.tv_usec - start.tv_usec ) / 1000.0;
+
 
     //(2) Allocate GPU memory
     bool* GPU_boolResults;
     cudaMalloc(&GPU_boolResults, N*sizeof(bool));
 
     // (3) Run GPU code
-     start = clock();
+     gettimeofday( &start, 0);
 
      GPU_filterByFood<<<N,THREADS_PER_BLOCK>>>(GPU_boolResults);
      cudaMemcpy(boolResults, GPU_boolResults, N*sizeof(bool), cudaMemcpyDeviceToHost);
 
-     end = clock();
-     double GPU_time = double(end - start) / double(CLOCKS_PER_SEC);
+     gettimeofday( &end, 0 );
+     double GPU_time = ( end.tv_sec - start.tv_sec ) * 1000.0 + ( end.tv_usec - start.tv_usec ) / 1000.0;
+     
      //print GPU output
      for(int i = 0; i < N; i++){
          if(boolResults[i]){
@@ -124,7 +126,7 @@ int main() {
      free(boolResults);
      free(CPU_boolResults);
 
-     printf("Time taken by CPU: %lf\n", CPU_time);
-     printf("Time taken by GPU: %lf\n", GPU_time);
+     printf("Time taken by CPU: %lf ms\n", CPU_time);
+     printf("Time taken by GPU: %lf ms\n", GPU_time);
      return 0;
 }
