@@ -1,4 +1,4 @@
- const char CPU_messages [][]= { "Ubbbbskis",
+ const char* CPU_messages []= { "Ubbbbskis",
  "Home gooodies",
   "Breaky",
   "New year, new rent agreement",

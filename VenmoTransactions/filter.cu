@@ -6,27 +6,33 @@
 #include "usernames.h"
 #include "GPU_searchKeywords.h"
 
-#define N 25000 //num of transaction
-#define THREADS_PER_BLOCK 85 //num of search words
+#define N 2500 //num of transaction
+#define THREADS_PER_BLOCK 124 //num of search words
 #define NUM_CORES 4992
 
-__global__ void filterByFood(bool* boolResults) {
-    int messageIndex = blockIdx.x;
-    int searchWordIndex = threadIdx.x;
+__global__ void filterByFood(bool* GPU_boolResults) {
+    const char *CM = GPU_messages[blockIdx.x]; //begin str
+    const char *criteria = GPU_searchKeywords[threadIdx.x]; // pattern substr
+    int s= 0;
+    int i = 0;
+    int j = 0;
 
-    while(*GPU_messages[messageIndex]) {
-        char* currentMessage = GPU_messages[messageIndex]; //begin str
-        char* criteria = GPU_searchKeywords[searchWordIndex]; // pattern substr
+    while(CM[s] != '\0') {
+        i = 0, j = s;
 
-        while(*GPU_messages[messageIndex] && *criteria && *GPU_messages[messageIndex] == *criteria ) {
-            GPU_messages[messageIndex]++;
-            criteria++;
+        while(criteria[i] != '\0' && CM[j] != '\0') {
+            if(CM[j] == criteria[i]) { 
+                j++;
+                i++;
+            }
+
+            else break;
         }
+        if(criteria[i] == '\0'){ //match! :)
+            GPU_boolResults[blockIdx.x] = true;
+        };
 
-        if(!*criteria)
-            boolResults[messageIndex] = true;
-
-        GPU_messages[messageIndex] = currentMessage + 1;
+        s++;
     }
 }
 

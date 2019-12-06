@@ -1,4 +1,4 @@
- const char usernames [][]= { "James-Dix-5",
+ const char* usernames []= { "James-Dix-5",
   "Rachel-Sher",
   "Emily-Verica",
   "Alexis-Gentzel",
