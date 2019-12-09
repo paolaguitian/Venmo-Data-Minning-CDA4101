@@ -13,6 +13,7 @@
 #define THREADS_PER_BLOCK 124 //num of search words
 #define NUM_CORES 4992
 
+// function to filter food items within GPU
 __global__ void GPU_filterByFood(bool* GPU_boolResults) {
     int numloop = N / NUM_CORES;
     if(numloop == 0) numloop = 1; 
@@ -47,6 +48,7 @@ __global__ void GPU_filterByFood(bool* GPU_boolResults) {
     }
 }
 
+// function to filter food items within CPU
 void CPU_filterByFood(bool* CPU_boolResults) { 
     int i;
     int j;
